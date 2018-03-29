@@ -25,6 +25,7 @@ app.use(require('express-session')({
   saveUninitialized: true,
   cookie: { secure: process.env.NODE_ENV === 'production' },
 }));
+app.use(require('connect-flash')());
 const passport = require('passport');
 passport.serializeUser((user, done) => {
   done(null, user.id);
@@ -85,6 +86,7 @@ app.get('/feeds', isAuthenticated, require('./controllers/feeds')({ knex }));
 app.get('/login', require('./controllers/login')({ knex }));
 app.post('/login', passport.authenticate('login', {
   successRedirect: '/feeds',
+  failureFlash: true,
   failureRedirect: '/login',
 }));
 app.get('/logout', isAuthenticated, (req, res) => {
