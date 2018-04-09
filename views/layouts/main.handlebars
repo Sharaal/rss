@@ -32,6 +32,9 @@
           </form>
         {{else}}
           <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+              <a href="#" data-toggle="modal" data-target="#registerModal">Register</a>
+            </li>
           </ul>
           <form class="form-inline" action="login" method="post">
             <input class="form-control" type="email" name="email" placeholder="E-Mail" aria-label="E-Mail" autofocus>
@@ -42,27 +45,56 @@
       </nav>
     </div>
   </header>
-  <div class="modal fade" id="subscripeModal" role="dialog" aria-labelledby="subscripeModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="subscripeModalLabel">Subscripe</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
+  {{#if user}}
+    <div class="modal fade" id="subscripeModal" role="dialog" aria-labelledby="subscripeModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="subscripeModalLabel">Subscripe</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <form action="subscripe" method="post">
+            <div class="modal-body">
+              <input class="form-control" type="url" name="url" placeholder="URL" aria-label="URL" autofocus>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-primary">Subscripe</button>
+            </div>
+          </form>
         </div>
-        <form action="subscripe" method="post">
-          <div class="modal-body">
-            <input class="form-control" type="url" name="url" placeholder="URL" aria-label="URL" autofocus>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="submit" class="btn btn-primary">Subscripe</button>
-          </div>
-        </form>
       </div>
     </div>
-  </div>
+  {{else}}
+    <div class="modal fade" id="registerModal" role="dialog" aria-labelledby="registerModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="registerModalLabel">Register</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <form action="register" method="post">
+            <div class="modal-body">
+              {{#if betakey}}
+                <input class="form-control" type="password" name="betakey" placeholder="Betakey" aria-label="Betakey">
+              {{/if}}
+              <input class="form-control" type="text" name="name" placeholder="Name" aria-label="Name">
+              <input class="form-control" type="email" name="email" placeholder="E-Mail" aria-label="E-Mail">
+              <input class="form-control" type="password" name="password" placeholder="Password" aria-label="Password">
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-primary">Register</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  {{/if}}
   {{#each flashs.error}}
   <div class="container">
     <div class="alert alert-danger" role="alert">

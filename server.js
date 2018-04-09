@@ -134,6 +134,8 @@ app.use(async (req, res, next) => {
     }
     res.locals.feeds = feeds;
     res.locals.user = req.user;
+  } else {
+    res.locals.betakey = process.env.BETAKEY;
   }
   next();
 });
@@ -147,6 +149,7 @@ const isAuthenticated = async (req, res, next) => {
 };
 
 app.get('/', require('./controllers/home')({ knex }));
+app.post('/register', require('./controllers/register')({ betakey: process.env.BETAKEY, knex }));
 app.post('/login', passport.authenticate('login', {
   successRedirect: '/',
   failureFlash: true,
