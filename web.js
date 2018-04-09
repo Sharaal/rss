@@ -100,6 +100,7 @@ app.post('/logout', isAuthenticated, (req, res) => {
   res.redirect('/');
 });
 app.post('/read', isAuthenticated, require('./controllers/read')({ knex }));
+app.post('/readall', isAuthenticated, require('./controllers/readall')({ knex }));
 app.post('/subscripe', isAuthenticated, require('./controllers/subscripe')({ knex }));
 app.post('/unsubscripe', isAuthenticated, require('./controllers/unsubscripe')({ knex }));
 

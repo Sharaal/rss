@@ -1,24 +1,36 @@
 <div class="py-5 bg-light">
   <div class="container">
-    <div class="row">
-      {{#each feed_items}}
-        <div class="col-md-4">
-          <a href="{{{link}}}">
-            <div class="card mb-4 box-shadow">
-              <!--
-                <img class="card-img-top" data-src="holder.js/100px225?theme=thumb&bg=55595c&fg=eceeef&text=Thumbnail" alt="Card image cap">
-              -->
-              <div class="card-body">
-                <h5 class="card-title">{{title}}</h5>
-                <p class="card-text">{{description}}</p>
-                <div class="d-flex justify-content-between align-items-center">
-                  <small class="text-muted">{{formatRelative pub_date}}</small>
+    {{#if feed_items.length}}
+      <form action="readall" method="post">
+        <button class="btn btn-primary" type="submit">Mark all as read</button>
+      </form>
+      <br/>
+      <div class="row">
+        {{#each feed_items}}
+          <div class="col-md-4">
+            <a href="{{{link}}}">
+              <div class="card mb-4 box-shadow">
+                <!--
+                  <img class="card-img-top" data-src="holder.js/100px225?theme=thumb&bg=55595c&fg=eceeef&text=Thumbnail" alt="Card image cap">
+                -->
+                <div class="card-body">
+                  <h5 class="card-title">{{title}}</h5>
+                  <p class="card-text">{{description}}</p>
+                  <div class="d-flex justify-content-between align-items-center">
+                    <small class="text-muted">{{formatRelative pub_date}}</small>
+                  </div>
                 </div>
               </div>
-            </div>
-          </a>
-        </div>
-      {{/each}}
-    </div>
+            </a>
+          </div>
+        {{/each}}
+      </div>
+      <br/>
+      <form action="readall" method="post">
+        <button class="btn btn-primary" type="submit">Mark all as read</button>
+      </form>
+    {{else}}
+      <p>All read</p>
+    {{/if}}
   </div>
 </div>
