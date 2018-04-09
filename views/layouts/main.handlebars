@@ -70,6 +70,13 @@
     </div>
   </div>
   {{/each}}
+  {{#each flashs.success}}
+  <div class="container">
+    <div class="alert alert-success" role="alert">
+      {{this}}
+    </div>
+  </div>
+  {{/each}}
   <main role="main">
     {{{body}}}
   </main>
