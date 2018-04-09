@@ -2,7 +2,7 @@ module.exports = ({ knex }) => async (req, res) => {
   let feed = (await knex('feeds').select().where('url', req.body.url))[0];
   if (!feed) {
     if (knex.client.config.client === 'pg') {
-      feed = (await knex('feeds').insert({ url: req.body.url, title: req.body.url }).returning('id'))[0];
+      feed = { id: (await knex('feeds').insert({ url: req.body.url, title: req.body.url }).returning('id'))[0] };
     } else {
       feed = { id: (await knex('feeds').insert({ url: req.body.url, title: req.body.url }))[0] };
     }
