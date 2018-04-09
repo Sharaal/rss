@@ -67,7 +67,7 @@ passport.deserializeUser(async (id, done) => {
     }
     done(null, user);
   } catch (e) {
-    done(e);
+    done(null, null, e.message);
   }
 });
 const bcrypt = require('bcrypt');
@@ -92,7 +92,7 @@ passport.use('login', new LocalStrategy(
       }
       done(null, user);
     } catch (e) {
-      done(null, false, e.message);
+      done(null, null, e.message);
     }
   }
 ));
