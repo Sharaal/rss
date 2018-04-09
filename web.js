@@ -76,7 +76,7 @@ passport.use('login', new LocalStrategy(
 app.use(passport.initialize());
 app.use(passport.session());
 
-const isAuthenticated = async (req, res, next) => {
+app.use(async (req, res, next) => {
   if (req.isAuthenticated()) {
     res.locals.feeds = await knex.raw(
       `SELECT
@@ -91,20 +91,22 @@ const isAuthenticated = async (req, res, next) => {
     );
     res.locals.user = req.user;
     next();
+  }
+});
+
+const isAuthenticated = async (req, res, next) => {
+  if (req.isAuthenticated()) {
+    next();
   } else {
     res.redirect('/home');
   }
 };
 
-app.get('/', isAuthenticated, (req, res) => {
-  res.redirect('/feeds');
-});
-app.get('/home', require('./controllers/home')({ knex }));
-app.get('/feeds', isAuthenticated, require('./controllers/feeds')({ knex }));
+app.get('/', require('./controllers/home')({ knex }));
 app.post('/login', passport.authenticate('login', {
-  successRedirect: '/feeds',
+  successRedirect: '/',
   failureFlash: true,
-  failureRedirect: '/home',
+  failureRedirect: '/',
 }));
 app.post('/logout', isAuthenticated, (req, res) => {
   req.logout();
