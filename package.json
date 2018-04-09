@@ -15,6 +15,7 @@
     "bcrypt": "^1.0.3",
     "body-parser": "^1.18.2",
     "connect-flash": "^0.1.1",
+    "connect-redis": "^3.3.3",
     "dotenv-safe": "^5.0.1",
     "express": "^4.16.3",
     "express-handlebars": "^3.0.0",

@@ -25,12 +25,17 @@ app.use(bodyParser.urlencoded({ extended: true }));
 if (process.env.NODE_ENV === 'production') {
   app.set('trust proxy', 1);
 }
-app.use(require('express-session')({
+
+const session = require('express-session');
+const RedisStore = require('connect-redis')(session);
+app.use(session({
+  store: new RedisStore({ url: process.env.REDIS_URL }),
   secret: process.env.SECRET,
   resave: false,
   saveUninitialized: true,
   cookie: { secure: process.env.NODE_ENV === 'production' },
 }));
+
 app.use(require('connect-flash')());
 app.use((req, res, next) => {
   res.locals.flashs = req.flash();
