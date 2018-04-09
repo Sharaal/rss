@@ -10,7 +10,13 @@ app.disable('x-powered-by');
 
 app.use(express.static('www'));
 
-app.engine('handlebars', require('express-handlebars')({ defaultLayout: 'main' }));
+const moment = require('moment');
+app.engine('handlebars', require('express-handlebars').create({
+  defaultLayout: 'main',
+  helpers: {
+    formatRelative: date => moment.duration(moment(date).diff()).humanize(true),
+  }
+}).engine);
 app.set('view engine', 'handlebars');
 
 const bodyParser = require('body-parser');
