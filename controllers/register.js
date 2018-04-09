@@ -7,11 +7,14 @@ module.exports = ({ betakey, knex }) => async (req, res) => {
   }
 
   let user;
+  console.log(knex);
+  console.log(knex.client.config.client);
   if (knex.client.config.client === 'pg') {
-    user = { id: (await knex('users').insert({ name: req.body.name }).returning('id'))[0] }
+    user = { id: (await knex('users').insert({ name: req.body.name }).returning('id'))[0] };
   } else {
     user = { id: (await knex('users').insert({ name: req.body.name }))[0] };
   }
+  console.log(user);
 
   const password = await bcrypt.hash(req.body.password, 10);
   await knex('user_emails').insert({ user_id: user.id, email: req.body.email, password });
