@@ -97,6 +97,8 @@ app.use(async (req, res, next) => {
           user_feed_subscriptions.user_id = :user_id`,
       { user_id: req.user.id }
     );
+    console.log('----- feeds');
+    console.log(feeds);
     for (const feed of feeds) {
       if (feed.fetched_at && feed.ttl) {
         const diffMinutes = (now.getTime() - new Date(feed.fetched_at).getTime()) / 1000 / 60;
