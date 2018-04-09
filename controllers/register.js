@@ -8,7 +8,8 @@ module.exports = ({ betakey, knex }) => async (req, res) => {
 
   let user;
   if (knex.client.config.client === 'pg') {
-    user = (await knex('users').insert({ name: req.body.name }).returning('id'))[0];
+    console.log(await knex('users').insert({ name: req.body.name }).returning('id'));
+    return;
   } else {
     user = { id: (await knex('users').insert({ name: req.body.name }))[0] };
   }
