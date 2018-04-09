@@ -8,25 +8,55 @@
 </head>
 <body>
   <header>
-    <div class="navbar navbar-dark bg-dark box-shadow">
-      <div class="container d-flex justify-content-between">
-        <a href="#" class="navbar-brand d-flex align-items-center">
-          <strong>RSS</strong>
-        </a>
+    <div class="container">
+      <nav class="navbar navbar-expand-lg navbar-light bg-light rounded">
+        <a class="navbar-brand" href="#"><strong>RSS</strong></a>
         {{#if user}}
-          <form class="form-inline" action="logout" method="post">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Subscriptions</a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#subscripeModal">Add</a>
+              </div>
+            </li>
+          </ul>
+          <form class="form-inline my-2 my-md-0" action="logout" method="post">
             <button class="btn btn-outline-secondary" type="submit">Logout</button>
           </form>
         {{else}}
+          <ul class="navbar-nav mr-auto">
+          </ul>
           <form class="form-inline" action="login" method="post">
-            <input class="form-control" type="email" name="email" placeholder="E-Mail" aria-label="E-Mail">
+            <input class="form-control" type="email" name="email" placeholder="E-Mail" aria-label="E-Mail" autofocus>
             <input class="form-control" type="password" name="password" placeholder="Password" aria-label="Password">
             <button class="btn btn-outline-primary" type="submit">Login</button>
           </form>
         {{/if}}
-      </div>
+      </nav>
     </div>
   </header>
+  <div class="modal fade" id="subscripeModal" role="dialog" aria-labelledby="subscripeModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="subscripeModalLabel">Subscripe</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <form action="subscripe" method="post">
+          <div class="modal-body">
+            <input class="form-control" type="url" name="url" placeholder="URL" aria-label="URL" autofocus>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary">Subscripe</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
   <main role="main">
     {{{body}}}
   </main>
