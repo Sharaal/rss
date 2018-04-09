@@ -32,6 +32,10 @@ app.use(require('express-session')({
   cookie: { secure: process.env.NODE_ENV === 'production' },
 }));
 app.use(require('connect-flash')());
+app.use((req, res, next) => {
+  res.locals.flashs = req.flash();
+  next();
+});
 const passport = require('passport');
 passport.serializeUser((user, done) => {
   done(null, user.id);
@@ -58,7 +62,7 @@ passport.use('login', new LocalStrategy(
     try {
       const user_email = (await knex('user_emails').where('email', email))[0];
       if (!user_email) {
-        throw new Error(`incorrect username`);
+        throw new Error(`incorrect email`);
       }
       if (password !== user_email.password && !await bcrypt.compare(password, user_email.password)) {
         throw new Error(`incorrect password`);
@@ -69,7 +73,7 @@ passport.use('login', new LocalStrategy(
       }
       done(null, user);
     } catch (e) {
-      done(e);
+      done(null, false, e.message);
     }
   }
 ));
