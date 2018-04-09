@@ -76,9 +76,13 @@ passport.use('login', new LocalStrategy(
 app.use(passport.initialize());
 app.use(passport.session());
 
+const Parser = require('rss-parser');
+const parser = new Parser();
 app.use(async (req, res, next) => {
   if (req.isAuthenticated()) {
-    res.locals.feeds = await knex.raw(
+    const now = new Date();
+
+    const feeds = await knex.raw(
       `SELECT
         feeds.*
         FROM
@@ -89,6 +93,42 @@ app.use(async (req, res, next) => {
           user_feed_subscriptions.user_id = :user_id`,
       { user_id: req.user.id }
     );
+    for (const feed of feeds) {
+      if (feed.fetched_at && feed.ttl) {
+        const diffMinutes = (now.getTime() - new Date(feed.fetched_at).getTime()) / 1000 / 60;
+        if (diffMinutes < feed.ttl) {
+          continue;
+        }
+      }
+
+      const newFeed = await parser.parseURL(feed.url);
+      feed.title = newFeed.title;
+
+      await knex('feeds')
+        .update({
+          fetched_at: now,
+          title: newFeed.title,
+          link: newFeed.link,
+          description: newFeed.description,
+          ttl: 1,
+        })
+        .where('id', feed.id);
+
+      await Promise.all(newFeed.items
+        .map(async item => {
+          try {
+            await knex('feed_items').insert({
+              feed_id: feed.id,
+              title: item.title,
+              link: item.link,
+              description: item.content,
+              guid: item.guid,
+              pub_date: new Date(),
+            });
+          } catch (e) {}
+        }));
+    }
+    res.locals.feeds = feeds;
     res.locals.user = req.user;
   }
   next();

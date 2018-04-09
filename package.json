@@ -9,9 +9,7 @@
   "repository": "sharaal/rss",
   "license": "MIT",
   "scripts": {
-    "migrate:latest": "knex migrate:latest",
-    "web": "node web",
-    "worker": "node worker"
+    "migrate:latest": "knex migrate:latest"
   },
   "dependencies": {
     "bcrypt": "^1.0.3",
