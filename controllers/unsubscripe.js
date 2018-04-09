@@ -8,7 +8,7 @@ module.exports = ({ knex }) => async (req, res) => {
     { user_id: req.user.id, feed_id }
   );
 
-  const count = (await knex.raw(
+  const count = (await knex.dQuery(
     'SELECT count(*) AS count FROM user_feed_subscriptions WHERE feed_id = :feed_id',
     { feed_id }
   ))[0];

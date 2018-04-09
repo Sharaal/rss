@@ -3,6 +3,20 @@ process.env.NODE_ENV = process.env.NODE_ENV || 'production';
 
 const knex = require('knex')(require('./knexfile')[process.env.NODE_ENV]);
 
+knex.dInsert = async (table, data) => {
+  if (knex.client.config.client === 'pg') {
+    return { id: (await knex(table).insert(data).returning('id'))[0] };
+  }
+  return { id: (await knex(table).insert(data))[0] };
+};
+
+knex.dQuery = async (sql, params) => {
+  if (knex.client.config.client === 'pg') {
+    return (await knex.raw(sql, params)).rows;
+  }
+  return await knex.raw(sql, params);
+};
+
 const express = require('express');
 
 const app = express();
@@ -91,7 +105,7 @@ app.use(async (req, res, next) => {
   if (req.isAuthenticated()) {
     const now = new Date();
 
-    const feeds = await knex.raw(
+    const feeds = await knex.dQuery(
       `SELECT
         feeds.*
         FROM
@@ -102,8 +116,6 @@ app.use(async (req, res, next) => {
           user_feed_subscriptions.user_id = :user_id`,
       { user_id: req.user.id }
     );
-    console.log('----- feeds');
-    console.log(feeds);
     for (const feed of feeds) {
       if (feed.fetched_at && feed.ttl) {
         const diffMinutes = (now.getTime() - new Date(feed.fetched_at).getTime()) / 1000 / 60;
