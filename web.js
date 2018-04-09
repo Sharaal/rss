@@ -90,8 +90,8 @@ app.use(async (req, res, next) => {
       { user_id: req.user.id }
     );
     res.locals.user = req.user;
-    next();
   }
+  next();
 });
 
 const isAuthenticated = async (req, res, next) => {
