@@ -16,6 +16,12 @@
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Subscriptions</a>
               <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                {{#each feeds}}
+                  <form class="form-inline" action="unsubscripe" method="post">
+                    <input type="hidden" name="feed_id" value="{{id}}">
+                    <button class="dropdown-item btn btn-outline-danger" type="submit">{{title}}</button>
+                  </form>
+                {{/each}}
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="#" data-toggle="modal" data-target="#subscripeModal">Add</a>
               </div>

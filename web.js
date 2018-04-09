@@ -76,8 +76,19 @@ passport.use('login', new LocalStrategy(
 app.use(passport.initialize());
 app.use(passport.session());
 
-const isAuthenticated = (req, res, next) => {
+const isAuthenticated = async (req, res, next) => {
   if (req.isAuthenticated()) {
+    res.locals.feeds = await knex.raw(
+      `SELECT
+        feeds.*
+        FROM
+          user_feed_subscriptions
+          INNER JOIN feeds ON
+            feeds.id = user_feed_subscriptions.feed_id
+        WHERE
+          user_feed_subscriptions.user_id = :user_id`,
+      { user_id: req.user.id }
+    );
     res.locals.user = req.user;
     next();
   } else {
