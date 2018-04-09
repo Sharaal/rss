@@ -75,21 +75,21 @@ const isAuthenticated = (req, res, next) => {
     res.locals.user = req.user;
     next();
   } else {
-    res.redirect('/login');
+    res.redirect('/home');
   }
 };
 
 app.get('/', isAuthenticated, (req, res) => {
   res.redirect('/feeds');
 });
+app.get('/home', require('./controllers/home')({ knex }));
 app.get('/feeds', isAuthenticated, require('./controllers/feeds')({ knex }));
-app.get('/login', require('./controllers/login')({ knex }));
 app.post('/login', passport.authenticate('login', {
   successRedirect: '/feeds',
   failureFlash: true,
-  failureRedirect: '/login',
+  failureRedirect: '/home',
 }));
-app.get('/logout', isAuthenticated, (req, res) => {
+app.post('/logout', isAuthenticated, (req, res) => {
   req.logout();
   res.redirect('/');
 });

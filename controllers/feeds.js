@@ -4,7 +4,7 @@ module.exports = ({ knex }) => async (req, res) => {
   // TODO: query param to list also all already read feed items
   // TODO: query param to list only feed items of a specified feed
 
-  const feeds = await knex.raw(
+  const feed_items = await knex.raw(
     `SELECT
       feed_items.*
       FROM
@@ -25,7 +25,7 @@ module.exports = ({ knex }) => async (req, res) => {
   );
 
   if (req.accepts('text/html')) {
-    res.render('feeds', { feeds });
+    res.render('feeds', { feed_items });
   } else {
     res.send(feeds);
   }
