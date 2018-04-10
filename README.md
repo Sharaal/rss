@@ -17,4 +17,4 @@
 # Known bugs
 
 * PK in `feed_items` only with `guid` is not good, better use combined PK with `feed_id` and `guid` and omit duplicate `guid` in the output if multiple feeds are shown
-* Error handling (e.g. duplicate subscriptions)
+* Error handling (e.g. duplicate registrations, duplicate subscriptions)
