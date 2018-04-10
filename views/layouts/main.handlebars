@@ -82,10 +82,10 @@
           </div>
           <form action="register" method="post">
             <div class="modal-body">
-              {{#if betakey}}
+              {{#if betakey.env}}
                 <div class="form-group">
                   <label for="betakey">Betakey:</label>
-                  <input class="form-control" type="password" id="betakey" name="betakey">
+                  <input class="form-control" type="password" id="betakey" name="betakey" value="{{betakey.query}}">
                 </div>
               {{/if}}
               <div class="form-group">

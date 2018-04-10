@@ -158,7 +158,7 @@ app.use(async (req, res, next) => {
     res.locals.feeds = feeds;
     res.locals.user = req.user;
   } else {
-    res.locals.betakey = process.env.BETAKEY;
+    res.locals.betakey = { env: process.env.BETAKEY, query: req.query.betakey };
   }
   next();
 });
