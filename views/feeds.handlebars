@@ -2,7 +2,10 @@
   <div class="container">
     {{#if feed_items.length}}
       <form action="readall" method="post">
-        <button class="btn btn-primary" type="submit">Mark all as read</button>
+        <button class="btn btn-primary" type="submit">
+          Mark all as read
+          <span class="badge badge-light">{{feed_items.length}}</span>
+        </button>
       </form>
       <br/>
       <div class="row">
