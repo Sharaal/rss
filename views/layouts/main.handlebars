@@ -57,7 +57,10 @@
           </div>
           <form action="subscripe" method="post">
             <div class="modal-body">
-              <input class="form-control" type="url" name="url" placeholder="URL" aria-label="URL" autofocus>
+              <div class="form-group">
+                <label for="url">URL:</label>
+                <input class="form-control" type="url" id="url" name="url" autofocus>
+              </div>
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -80,11 +83,23 @@
           <form action="register" method="post">
             <div class="modal-body">
               {{#if betakey}}
-                <input class="form-control" type="password" name="betakey" placeholder="Betakey" aria-label="Betakey">
+                <div class="form-group">
+                  <label for="betakey">Betakey:</label>
+                  <input class="form-control" type="password" id="betakey" name="betakey">
+                </div>
               {{/if}}
-              <input class="form-control" type="text" name="name" placeholder="Name" aria-label="Name">
-              <input class="form-control" type="email" name="email" placeholder="E-Mail" aria-label="E-Mail">
-              <input class="form-control" type="password" name="password" placeholder="Password" aria-label="Password">
+              <div class="form-group">
+                <label for="betakey">Name:</label>
+                <input class="form-control" type="text" id="name" name="name" autofocus>
+              </div>
+              <div class="form-group">
+                <label for="betakey">E-Mail:</label>
+                <input class="form-control" type="email" id="email" name="email">
+              </div>
+              <div class="form-group">
+                <label for="betakey">Password:</label>
+                <input class="form-control" type="password" id="password" name="password">
+              </div>
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
