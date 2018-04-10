@@ -17,6 +17,7 @@
                   <h5 class="card-title">{{title}}</h5>
                   <p class="card-text">{{description}}</p>
                   <div class="d-flex justify-content-between align-items-center">
+                    <small class="text-muted">{{lookup (lookup ../feeds feed_id) 'title'}}</small>
                     <small class="text-muted">{{formatRelative pub_date}}</small>
                   </div>
                 </div>

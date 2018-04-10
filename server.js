@@ -105,7 +105,7 @@ app.use(async (req, res, next) => {
   if (req.isAuthenticated()) {
     const now = new Date();
 
-    const feeds = await knex.dQuery(
+    const rows = await knex.dQuery(
       `SELECT
         feeds.*
         FROM
@@ -116,7 +116,11 @@ app.use(async (req, res, next) => {
           user_feed_subscriptions.user_id = :user_id`,
       { user_id: req.user.id }
     );
-    for (const feed of feeds) {
+    const feeds = {};
+    for (const record of rows) {
+      feeds[record.id] = record;
+    }
+    for (const feed of Object.values(feeds)) {
       if (feed.fetched_at && feed.ttl) {
         const diffMinutes = (now.getTime() - new Date(feed.fetched_at).getTime()) / 1000 / 60;
         if (diffMinutes < feed.ttl) {
