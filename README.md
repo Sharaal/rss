@@ -7,8 +7,9 @@
   * Settings like the amount of feed items per page
   * Move the deletion of subscriptions into that
 * Add possibility to filter feed items by:
-  * feed
-  * all feed items, also the already read
+  * Feed
+  * Category
+  * All feed items, also the already read
 * Add possibility to read later (mark feed items to read later and filter only for them)
 
 ## Achieved
