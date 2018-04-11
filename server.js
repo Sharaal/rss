@@ -1,13 +1,27 @@
 require('dotenv-safe').config();
 process.env.NODE_ENV = process.env.NODE_ENV || 'production';
 
+const winston = require('winston');
+const logger = new winston.Logger({
+  level: process.env.LOG_LEVEL,
+  transports: [new winston.transports.Console({
+    timestamp: true,
+    colorize: true,
+  })],
+});
+
 const knex = require('knex')(require('./knexfile')[process.env.NODE_ENV]);
 
 knex.dInsert = async (table, data) => {
+  logger.debug(`dInsert with table "${table}" and data "${JSON.stringify(data)}"`);
   if (knex.client.config.client === 'pg') {
-    return { id: (await knex(table).insert(data).returning('id'))[0] };
+    const pgResult = await knex(table).insert(data).returning('id');
+    logger.debug(`dInsert result "${JSON.stringify(pgResult)}"`);
+    return { id: pgResult[0] };
   }
-  return { id: (await knex(table).insert(data))[0] };
+  const result = await knex(table).insert(data);
+  logger.debug(`dInsert result "${JSON.stringify(result)}"`);
+  return { id: result[0] };
 };
 
 knex.dQuery = async (sql, params) => {
@@ -63,7 +77,9 @@ passport.deserializeUser(async (id, done) => {
   try {
     const user = (await knex('users').where('id', id))[0];
     if (!user) {
-      throw new Error(`missing user with id "${id}"`);
+      const message = `missing user with id "${id}"`;
+      logger.warning(message);
+      throw new Error(message);
     }
     done(null, user);
   } catch (e) {
@@ -88,7 +104,9 @@ passport.use('login', new LocalStrategy(
       }
       const user = (await knex('users').where('id', user_email.user_id))[0];
       if (!user) {
-        throw new Error(`missing user with id "${id}"`);
+        const message = `missing user with id "${id}"`;
+        logger.warning(message);
+        throw new Error(message);
       }
       done(null, user);
     } catch (e) {
@@ -128,6 +146,8 @@ app.use(async (req, res, next) => {
         }
       }
 
+      logger.info(`fetch feed items for feed "${feed.title} with ID ${feed.id}" and URL ${feed.url}`);
+
       const newFeed = await parser.parseURL(feed.url);
       feed.title = newFeed.title;
 
@@ -152,6 +172,7 @@ app.use(async (req, res, next) => {
               guid: item.guid,
               pub_date: new Date(),
             });
+            logger.info(`new feed item "${item.title}" for feed "${feed.title} with ID ${feed.id}" and URL ${feed.url}`);
           } catch (e) {}
         }));
     }
@@ -171,8 +192,8 @@ const isAuthenticated = async (req, res, next) => {
   }
 };
 
-app.get('/', require('./controllers/home')({ knex }));
-app.post('/register', require('./controllers/register')({ betakey: process.env.BETAKEY, knex }));
+app.get('/', require('./controllers/home')({ knex, logger }));
+app.post('/register', require('./controllers/register')({ betakey: process.env.BETAKEY, knex, logger }));
 app.post('/login', passport.authenticate('login', {
   successRedirect: '/',
   failureFlash: true,
@@ -182,12 +203,12 @@ app.post('/logout', isAuthenticated, (req, res) => {
   req.logout();
   res.redirect('/');
 });
-app.post('/read', isAuthenticated, require('./controllers/read')({ knex }));
-app.post('/readall', isAuthenticated, require('./controllers/readall')({ knex }));
-app.post('/subscripe', isAuthenticated, require('./controllers/subscripe')({ knex }));
-app.post('/unsubscripe', isAuthenticated, require('./controllers/unsubscripe')({ knex }));
+app.post('/read', isAuthenticated, require('./controllers/read')({ knex, logger }));
+app.post('/readall', isAuthenticated, require('./controllers/readall')({ knex, logger }));
+app.post('/subscripe', isAuthenticated, require('./controllers/subscripe')({ knex, logger }));
+app.post('/unsubscripe', isAuthenticated, require('./controllers/unsubscripe')({ knex, logger }));
 
 const port = process.env.PORT;
 app.listen(port, () => {
-  console.log(`app listen on port ${port}`);
+  logger.info(`app listen on port ${port}`);
 });
