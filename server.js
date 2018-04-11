@@ -5,8 +5,8 @@ const winston = require('winston');
 const logger = new winston.Logger({
   level: process.env.LOG_LEVEL,
   transports: [new winston.transports.Console({
-    timestamp: true,
-    colorize: true,
+    timestamp: process.env.LOG_TIMESTAMP === '1',
+    colorize: process.env.LOG_COLORIZE === '1',
   })],
 });
 
