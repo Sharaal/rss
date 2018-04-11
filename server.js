@@ -169,6 +169,7 @@ app.use(async (req, res, next) => {
               title: item.title,
               link: item.link,
               description: item.content,
+              categories: item.categories ? item.categories.join(', ') : null,
               guid: item.guid,
               pub_date: new Date(),
             });

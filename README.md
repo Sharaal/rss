@@ -2,7 +2,6 @@
 
 ## Open
 
-* Add the genres as `category` tags in the maxdome feed, show them as subtitles
 * Pagination for the feed items
 * Introduce a manage user area (instead of "Logout" button)
   * Settings like the amount of feed items per page
