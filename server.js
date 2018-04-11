@@ -170,6 +170,7 @@ app.use(async (req, res, next) => {
               link: item.link,
               description: item.content,
               categories: item.categories ? item.categories.join(', ') : null,
+              image: item.enclosure && item.enclosure.type.startsWith('image/') ? item.enclosure.url : null,
               guid: item.guid,
               pub_date: new Date(),
             });
