@@ -1,6 +1,6 @@
-<div class="py-5">
-  <div class="container">
-    {{#if feed_items.length}}
+{{#if feed_items.length}}
+  <div class="py-5">
+    <div class="container">
       <form action="readall" method="post">
         <button class="btn btn-primary" type="submit">
           Mark all as read
@@ -36,8 +36,12 @@
       <form action="readall" method="post">
         <button class="btn btn-primary" type="submit">Mark all as read</button>
       </form>
-    {{else}}
-      <p>All read</p>
-    {{/if}}
+    </div>
   </div>
-</div>
+{{else}}
+  <section class="jumbotron text-center">
+    <div class="container">
+      <h1 class="jumbotron-heading">All read</h1>
+    </div>
+  </section>
+{{/if}}
