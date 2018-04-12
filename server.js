@@ -209,6 +209,7 @@ app.post('/logout', isAuthenticated, (req, res) => {
 });
 app.post('/read', isAuthenticated, require('./controllers/read')({ knex, logger }));
 app.post('/readall', isAuthenticated, require('./controllers/readall')({ knex, logger }));
+app.get('/search', isAuthenticated, require('./controllers/search')({ knex, logger }));
 app.post('/subscripe', isAuthenticated, require('./controllers/subscripe')({ knex, logger }));
 app.post('/unsubscripe', isAuthenticated, require('./controllers/unsubscripe')({ knex, logger }));
 

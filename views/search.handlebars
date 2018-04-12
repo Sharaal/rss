@@ -1,0 +1,29 @@
+{{#if links.length}}
+  <div class="py-5">
+    <div class="container">
+      <div class="row">
+        {{#each links}}
+          <div class="col-md-4">
+            <div class="card mb-4 box-shadow">
+              <div class="card-body">
+                <h5 class="card-title">{{title}}</h5>
+                <div class="d-flex justify-content-between align-items-center">
+                  <form action="subscripe" method="post">
+                    <input type="hidden" name="url" value="{{url}}">
+                    <button class="btn btn-primary" type="submit">Subscripe</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        {{/each}}
+      </div>
+    </div>
+  </div>
+{{else}}
+  <section class="jumbotron text-center">
+    <div class="container">
+      <h1 class="jumbotron-heading">No RSS feeds found</h1>
+    </div>
+  </section>
+{{/if}}
