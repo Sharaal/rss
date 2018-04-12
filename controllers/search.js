@@ -19,7 +19,7 @@ module.exports = ({ knex }) => async (req, res) => {
   });
 
   if (req.accepts('text/html')) {
-    res.render('search', { links });
+    res.render('search', { url: req.query.url, links });
   } else {
     res.send({ links });
   }
