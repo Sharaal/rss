@@ -148,35 +148,37 @@ app.use(async (req, res, next) => {
 
       logger.info(`fetch feed items for feed "${feed.title} with ID ${feed.id}" and URL ${feed.url}`);
 
-      const newFeed = await parser.parseURL(feed.url);
-      feed.title = newFeed.title;
+      try {
+        const newFeed = await parser.parseURL(feed.url);
+        feed.title = newFeed.title;
 
-      await knex('feeds')
-        .update({
-          fetched_at: now,
-          title: newFeed.title,
-          link: newFeed.link,
-          description: newFeed.description,
-          ttl: 1,
-        })
-        .where('id', feed.id);
+        await knex('feeds')
+          .update({
+            fetched_at: now,
+            title: newFeed.title,
+            link: newFeed.link,
+            description: newFeed.description,
+            ttl: 1,
+          })
+          .where('id', feed.id);
 
-      await Promise.all(newFeed.items
-        .map(async item => {
-          try {
-            await knex('feed_items').insert({
-              feed_id: feed.id,
-              title: item.title,
-              link: item.link,
-              description: item.content,
-              categories: item.categories ? item.categories.join(', ') : null,
-              image: item.enclosure && item.enclosure.type.startsWith('image/') ? item.enclosure.url : null,
-              guid: item.guid,
-              pub_date: new Date(),
-            });
-            logger.info(`new feed item "${item.title}" for feed "${feed.title} with ID ${feed.id}" and URL ${feed.url}`);
-          } catch (e) {}
-        }));
+        await Promise.all(newFeed.items
+          .map(async item => {
+            try {
+              await knex('feed_items').insert({
+                feed_id: feed.id,
+                title: item.title,
+                link: item.link,
+                description: item.content,
+                categories: item.categories ? item.categories.join(', ') : null,
+                image: item.enclosure && item.enclosure.type.startsWith('image/') ? item.enclosure.url : null,
+                guid: item.guid,
+                pub_date: new Date(),
+              });
+              logger.info(`new feed item "${item.title}" for feed "${feed.title} with ID ${feed.id}" and URL ${feed.url}`);
+            } catch (e) {}
+          }));
+      } catch (e) {}
     }
     res.locals.feeds = feeds;
     res.locals.user = req.user;
