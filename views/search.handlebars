@@ -8,10 +8,14 @@
               <div class="card-body">
                 <h5 class="card-title">{{title}}</h5>
                 <div class="d-flex justify-content-between align-items-center">
-                  <form action="subscripe" method="post">
-                    <input type="hidden" name="url" value="{{url}}">
-                    <button class="btn btn-primary" type="submit">Subscripe</button>
-                  </form>
+                  {{#if subscriped}}
+                    Already subscriped
+                  {{else}}
+                    <form action="subscripe" method="post">
+                      <input type="hidden" name="url" value="{{url}}">
+                      <button class="btn btn-primary" type="submit">Subscripe</button>
+                    </form>
+                  {{/if}}
                 </div>
               </div>
             </div>
