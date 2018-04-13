@@ -2,6 +2,8 @@
 
 ## Open
 
+* Fetch rss feed in search to be able to display details of it (e.g. description, image)
+* Mark the already subscriped rss feeds in search
 * Pagination for the feed items
 * Introduce a manage user area (instead of "Logout" button)
   * Settings like the amount of feed items per page
