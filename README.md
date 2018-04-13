@@ -2,6 +2,7 @@
 
 ## Open
 
+* Support HTML encoded descriptions of feed items, care about large images
 * Fetch rss feed in search to be able to display details of it (e.g. description, image)
 * Pagination for the feed items
 * Introduce a manage user area (instead of "Logout" button)
