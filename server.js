@@ -55,6 +55,7 @@ if (process.env.NODE_ENV === 'production') {
   app.use((req, res, next) => {
     if (!req.secure && req.headers['x-forwarded-proto'] !== 'https') {
       res.redirect('https://' + req.headers['host'] + req.url);
+      return;
     }
     next();
   });
