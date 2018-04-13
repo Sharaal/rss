@@ -53,10 +53,14 @@ app.use(bodyParser.urlencoded({ extended: true }));
 if (process.env.NODE_ENV === 'production') {
   app.set('trust proxy', 1);
   app.use((req, res, next) => {
+    console.log(req.secure);
+    console.log(req.headers);
     if (req.secure) {
+      console.log('next');
       next();
     } else {
-      res.redirect(301, `https://${req.headers['host']}${req.url}`);
+      console.log('redirect', `https://${req.headers['host']}${req.url}`);
+      //res.redirect(301, `https://${req.headers['host']}${req.url}`);
     }
   });
 }
