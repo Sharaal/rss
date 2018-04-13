@@ -5,7 +5,12 @@ module.exports = ({ knex }) => async (req, res) => {
   const links = [];
 
   try {
-    const html = await fetch(req.query.url).then(res => res.text());
+    let url = req.query.url;
+    if (!url.startsWith('http://')) {
+      url = `http://${url}`;
+    }
+
+    const html = await fetch(url).then(res => res.text());
     const $ = cheerio.load(html);
 
     $('link[rel="alternate"][type="application/rss+xml"]').map((_, link) => {
