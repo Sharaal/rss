@@ -5,8 +5,8 @@ const winston = require('winston');
 const logger = new winston.Logger({
   level: process.env.LOG_LEVEL,
   transports: [new winston.transports.Console({
-    timestamp: process.env.LOG_TIMESTAMP === '1',
-    colorize: process.env.LOG_COLORIZE === '1',
+    timestamp: process.env.NODE_ENV !== 'production',
+    colorize: process.env.NODE_ENV !== 'production',
   })],
 });
 
@@ -52,6 +52,13 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 if (process.env.NODE_ENV === 'production') {
   app.set('trust proxy', 1);
+  app.use((req, res, next) => {
+    if (req.secure) {
+      next();
+    } else {
+      res.redirect(301, `https://${req.headers['host']}${req.url}`);
+    }
+  });
 }
 
 const session = require('express-session');
