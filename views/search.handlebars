@@ -13,7 +13,10 @@
                 <p class="card-text">{{description}}</p>
                 <div class="d-flex justify-content-between align-items-center">
                   {{#if subscriped}}
-                    Already subscriped
+                    <button class="btn btn-secondary disabled">
+                      Already subscriped
+                      <span class="badge badge-light">{{items.length}}</span>
+                    </button>
                   {{else}}
                     <form action="subscripe" method="post">
                       <input type="hidden" name="url" value="{{url}}">
