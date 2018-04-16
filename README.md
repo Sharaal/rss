@@ -1,5 +1,6 @@
 # Backlog
 
+* Endpoint allows multiple feed urls and just fetch, order and show the feed items, available also for not authenticated users
 * Support Atom feed format
 * Add possibility to read later (mark feed items to read later and filter only for them)
 * Support HTML encoded descriptions of feed items, care about large images
