@@ -164,7 +164,7 @@ app.use(async (req, res, next) => {
             title: newFeed.title,
             link: newFeed.link,
             description: newFeed.description,
-            ttl: 1,
+            ttl: newFeed.ttl ? +newFeed.ttl : 60,
           })
           .where('id', feed.id);
 
