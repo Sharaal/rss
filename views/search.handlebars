@@ -7,13 +7,17 @@
             <div class="card mb-4 box-shadow">
               <div class="card-body">
                 <h5 class="card-title">{{title}}</h5>
+                <p class="card-text">{{description}}</p>
                 <div class="d-flex justify-content-between align-items-center">
                   {{#if subscriped}}
                     Already subscriped
                   {{else}}
                     <form action="subscripe" method="post">
                       <input type="hidden" name="url" value="{{url}}">
-                      <button class="btn btn-primary" type="submit">Subscripe</button>
+                      <button class="btn btn-primary" type="submit">
+                        Subscripe
+                        <span class="badge badge-light">{{items.length}}</span>
+                      </button>
                     </form>
                   {{/if}}
                 </div>

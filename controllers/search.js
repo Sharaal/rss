@@ -1,5 +1,6 @@
 const cheerio = require('cheerio');
 const fetch = require('node-fetch');
+const rss = require('../utils/rss');
 const { URL } = require('url');
 
 module.exports = ({ knex }) => async (req, res) => {
@@ -37,6 +38,13 @@ module.exports = ({ knex }) => async (req, res) => {
         subscriped: subscripedUrls.includes(url),
       });
     });
+
+    await Promise.all(links.map(async link => {
+      const feed = await rss(link.url);
+      link.title = feed.title;
+      link.description = feed.description;
+      link.items = feed.items;
+    }));
   } catch (e) {}
 
   if (req.accepts('text/html')) {
