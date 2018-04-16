@@ -2,17 +2,16 @@
 
 ## Open
 
-* Support HTML encoded descriptions of feed items, care about large images
 * Fetch rss feed in search to be able to display details of it (e.g. description, image)
+* Add possibility to read later (mark feed items to read later and filter only for them)
+* Support HTML encoded descriptions of feed items, care about large images
 * Pagination for the feed items
-* Introduce a manage user area (instead of "Logout" button)
   * Settings like the amount of feed items per page
-  * Move the deletion of subscriptions into that
+* Move the deletion of subscriptions into the settings area
 * Add possibility to filter feed items by:
   * Feed
   * Category
   * All feed items, also the already read
-* Add possibility to read later (mark feed items to read later and filter only for them)
 
 ## Achieved
 
