@@ -175,7 +175,7 @@ app.use(async (req, res, next) => {
                 feed_id: feed.id,
                 title: item.title,
                 link: item.link,
-                description: item.content,
+                description: item.contentSnippet,
                 categories: item.categories ? item.categories.join(', ') : null,
                 image: item.enclosure && item.enclosure.type.startsWith('image/') ? item.enclosure.url : null,
                 guid: item.guid,
