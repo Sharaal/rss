@@ -1,6 +1,5 @@
 # Backlog
 
-* Fetch rss feed in search to be able to display details of it (e.g. description, image)
 * Add possibility to read later (mark feed items to read later and filter only for them)
 * Support HTML encoded descriptions of feed items, care about large images
 * Pagination for the feed items

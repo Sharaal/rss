@@ -6,6 +6,9 @@
           <div class="col-md-4">
             <div class="card mb-4 box-shadow">
               <div class="card-body">
+                {{#if image}}
+                  <img class="card-img-top" src="{{image}}" alt="">
+                {{/if}}
                 <h5 class="card-title">{{title}}</h5>
                 <p class="card-text">{{description}}</p>
                 <div class="d-flex justify-content-between align-items-center">

@@ -44,6 +44,9 @@ module.exports = ({ knex }) => async (req, res) => {
       link.title = feed.title;
       link.description = feed.description;
       link.items = feed.items;
+      if (feed.image) {
+        link.image = feed.image.url[0];
+      }
     }));
   } catch (e) {}
 
