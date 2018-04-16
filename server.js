@@ -124,8 +124,7 @@ passport.use('login', new LocalStrategy(
 app.use(passport.initialize());
 app.use(passport.session());
 
-const Parser = require('rss-parser');
-const parser = new Parser();
+const rss = require('./utils/rss');
 app.use(async (req, res, next) => {
   if (req.isAuthenticated()) {
     const now = new Date();
@@ -156,7 +155,7 @@ app.use(async (req, res, next) => {
       logger.info(`fetch feed items for feed "${feed.title} with ID ${feed.id}" and URL ${feed.url}`);
 
       try {
-        const newFeed = await parser.parseURL(feed.url);
+        const newFeed = await rss(feed.url);
         feed.title = newFeed.title;
 
         await knex('feeds')
