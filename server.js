@@ -178,7 +178,7 @@ app.use(async (req, res, next) => {
                 description: item.contentSnippet,
                 categories: item.categories ? item.categories.join(', ') : null,
                 image: item.enclosure && item.enclosure.type.startsWith('image/') ? item.enclosure.url : null,
-                guid: item.guid,
+                guid: item.guid || item.link,
                 pub_date: new Date(),
               });
               logger.info(`new feed item "${item.title}" for feed "${feed.title} with ID ${feed.id}" and URL ${feed.url}`);
