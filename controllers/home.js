@@ -25,8 +25,10 @@ module.exports = ({ knex }) => async (req, res) => {
       { user_id: req.user.id }
     );
 
+    const max_feed_item_id = Math.max.apply(null, feed_items.map(feed_item => feed_item.id));
+
     if (req.accepts('text/html')) {
-      res.render('feeds', { feed_items });
+      res.render('feeds', { feed_items, max_feed_item_id });
     } else {
       res.send(feed_items);
     }

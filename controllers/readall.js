@@ -15,8 +15,10 @@ module.exports = ({ knex }) => async (req, res) => {
       WHERE
         user_feed_subscriptions.user_id = :user_id
         AND
-        user_feed_item_reads.feed_item_id IS NULL`,
-    { user_id: req.user.id }
+        user_feed_item_reads.feed_item_id IS NULL
+        AND
+        feed_items.id <= :feed_item_id`,
+    { user_id: req.user.id, feed_item_id: +req.body.max_feed_item_id }
   );
 
   if (req.accepts('text/html')) {
