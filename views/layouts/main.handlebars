@@ -13,19 +13,7 @@
         <a class="navbar-brand" href="/"><strong>RSS</strong></a>
         {{#if user}}
           <ul class="navbar-nav mr-auto">
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Subscriptions</a>
-              <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                {{#each feeds}}
-                  <form class="form-inline" action="unsubscripe" method="post">
-                    <input type="hidden" name="feed_id" value="{{id}}">
-                    <button class="dropdown-item btn btn-outline-danger" type="submit">{{title}}</button>
-                  </form>
-                {{/each}}
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#subscripeModal">Add</a>
-              </div>
-            </li>
+            <a class="nav-item" href="#" data-toggle="modal" data-target="#subscripeModal">Subscripe</a>
           </ul>
           <form class="form-inline my-2 my-lg-0 mr-auto" action="search" method="get">
             <input class="form-control mr-sm-2" type="search" name="search" value="{{search}}" placeholder="Search" aria-label="Search">
@@ -35,6 +23,8 @@
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{user.name}}</a>
               <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                <a class="dropdown-item" href="/settings">Settings</a>
+                <div class="dropdown-divider"></div>
                 <form class="form-inline" action="logout" method="post">
                   <button class="dropdown-item btn btn-outline-secondary" type="submit">Logout</button>
                 </form>
