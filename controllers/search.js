@@ -17,37 +17,55 @@ module.exports = ({ knex }) => async (req, res) => {
       search = `http://${search}`;
     }
 
-    const html = await fetch(search).then(res => {
+    const body = await fetch(search).then(res => {
       search = res.url;
       return res.text();
     });
-    const $ = cheerio.load(html);
 
-    $('link[rel="alternate"][type="application/rss+xml"]').map((_, link) => {
-      link = $(link);
-      const href = link.attr('href');
-      let url;
-      if (href.includes('://')) {
-        url = href;
-      } else {
-        url = new URL(href, search).toString();
-      }
+    if (body.startsWith('<?xml')) {
       links.push({
-        url,
-        title: link.attr('title'),
-        subscriped: subscripedUrls.includes(url),
+        url: search,
+        subscriped: subscripedUrls.includes(search),
       });
-    });
 
-    await Promise.all(links.map(async link => {
-      const feed = await rss(link.url);
-      link.title = feed.title;
-      link.description = feed.description;
-      link.items = feed.items;
-      if (feed.image) {
-        link.image = feed.image.url[0];
-      }
-    }));
+      await Promise.all(links.map(async link => {
+        const feed = await rss(link.url);
+        link.title = feed.title;
+        link.description = feed.description;
+        link.items = feed.items;
+        if (feed.image) {
+          link.image = feed.image.url[0];
+        }
+      }));
+    } else {
+        const $ = cheerio.load(body);
+
+        $('link[rel="alternate"][type="application/rss+xml"]').map((_, link) => {
+          link = $(link);
+          const href = link.attr('href');
+          let url;
+          if (href.includes('://')) {
+            url = href;
+          } else {
+            url = new URL(href, search).toString();
+          }
+          links.push({
+            url,
+            title: link.attr('title'),
+            subscriped: subscripedUrls.includes(url),
+          });
+        });
+
+        await Promise.all(links.map(async link => {
+          const feed = await rss(link.url);
+          link.title = feed.title;
+          link.description = feed.description;
+          link.items = feed.items;
+          if (feed.image) {
+            link.image = feed.image.url[0];
+          }
+        }));
+    }
   } catch (e) {}
 
   if (req.accepts('text/html')) {

@@ -12,9 +12,7 @@
       <nav class="navbar navbar-expand-lg navbar-light bg-light rounded">
         <a class="navbar-brand" href="/"><strong>RSS</strong></a>
         {{#if user}}
-          <ul class="navbar-nav mr-auto">
-            <a class="nav-item" href="#" data-toggle="modal" data-target="#subscripeModal">Subscripe</a>
-          </ul>
+          <div class="navbar-nav mr-auto"></div>
           <form class="form-inline my-2 my-lg-0 mr-auto" action="search" method="get">
             <input class="form-control mr-sm-2" type="search" name="search" value="{{search}}" placeholder="Search" aria-label="Search">
             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
@@ -46,32 +44,7 @@
       </nav>
     </div>
   </header>
-  {{#if user}}
-    <div class="modal fade" id="subscripeModal" role="dialog" aria-labelledby="subscripeModalLabel" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="subscripeModalLabel">Subscripe</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <form action="subscripe" method="post">
-            <div class="modal-body">
-              <div class="form-group">
-                <label for="url">URL:</label>
-                <input class="form-control" type="url" id="url" name="url" autofocus>
-              </div>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              <button type="submit" class="btn btn-primary">Subscripe</button>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-  {{else}}
+  {{#unless user}}
     <div class="modal fade" id="registerModal" role="dialog" aria-labelledby="registerModalLabel" aria-hidden="true">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -110,7 +83,7 @@
         </div>
       </div>
     </div>
-  {{/if}}
+  {{/unless}}
   {{#each flashs.error}}
   <div class="container">
     <div class="alert alert-danger" role="alert">

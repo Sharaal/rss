@@ -1,6 +1,5 @@
 # Backlog
 
-* Merge "Subscripe" and "Search" and display the single feed if an feed url is entered
 * Endpoint allows multiple feed urls and just fetch, order and show the feed items, available also for not authenticated users
 * Support Atom feed format
 * Add possibility to read later (mark feed items to read later and filter only for them)
@@ -18,3 +17,4 @@
 * Error handling (e.g. duplicate registrations, duplicate subscriptions)
 * Get rid of `knex`, try another ORM or directly use `pg` because of incompatibility with `sqlite3`
 * Timestamp datatype in the database is bad for compatibility, better use unix timestamps
+* Search with an actual feed will fetch this feed twice, because `rss-parser` not work with the body directly
