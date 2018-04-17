@@ -1,12 +1,12 @@
 # Backlog
 
+* Merge "Subscripe" and "Search" and display the single feed if an feed url is entered
 * Endpoint allows multiple feed urls and just fetch, order and show the feed items, available also for not authenticated users
 * Support Atom feed format
 * Add possibility to read later (mark feed items to read later and filter only for them)
 * Support HTML encoded descriptions of feed items, care about large images
 * Pagination for the feed items
   * Settings like the amount of feed items per page
-* Move the deletion of subscriptions into the settings area
 * Add possibility to filter feed items by:
   * Feed
   * Category
