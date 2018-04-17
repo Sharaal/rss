@@ -5,7 +5,7 @@ module.exports = ({ knex }) => async (req, res) => {
   });
 
   if (req.accepts('text/html')) {
-    res.redirect('/');
+    res.redirect(req.body.redirect || '/');
   } else {
     res.send();
   }

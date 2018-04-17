@@ -16,7 +16,7 @@ module.exports = ({ betakey, knex, logger }) => async (req, res) => {
   if (req.accepts('text/html')) {
     logger.info(`new user with name "${req.body.name}" and email "${req.body.email}" successfully registered`);
     req.flash('success', 'successfully registered');
-    res.redirect('/');
+    res.redirect(req.body.redirect || '/');
   } else {
     res.send();
   }

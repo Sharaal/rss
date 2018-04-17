@@ -8,7 +8,7 @@ module.exports = ({ knex }) => async (req, res) => {
 
   if (req.accepts('text/html')) {
     req.flash('success', 'successfully subscriped');
-    res.redirect('/');
+    res.redirect(req.body.redirect || '/');
   } else {
     res.send();
   }

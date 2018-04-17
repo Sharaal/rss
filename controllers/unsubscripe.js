@@ -19,7 +19,7 @@ module.exports = ({ knex }) => async (req, res) => {
 
   if (req.accepts('text/html')) {
     req.flash('success', 'successfully unsubscriped');
-    res.redirect('/');
+    res.redirect(req.body.redirect || '/');
   } else {
     res.send();
   }

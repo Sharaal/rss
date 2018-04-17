@@ -23,7 +23,7 @@ module.exports = ({ knex }) => async (req, res) => {
 
   if (req.accepts('text/html')) {
     req.flash('success', 'successfully marked all as read');
-    res.redirect('/');
+    res.redirect(req.body.redirect || '/');
   } else {
     res.send();
   }
