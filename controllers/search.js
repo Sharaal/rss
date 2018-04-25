@@ -13,7 +13,7 @@ module.exports = ({ knex }) => async (req, res) => {
 
   try {
     let search = req.query.search;
-    if (!search.startsWith('http://')) {
+    if (!search.includes('://')) {
       search = `http://${search}`;
     }
 
