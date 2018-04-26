@@ -180,6 +180,7 @@ app.use(async (req, res, next) => {
                 image: item.enclosure && item.enclosure.type.startsWith('image/') ? item.enclosure.url : null,
                 guid: item.guid || item.link,
                 pub_date: new Date(),
+                author: item['dc:creator'],
               });
               logger.info(`new feed item "${item.title}" for feed "${feed.title} with ID ${feed.id}" and URL ${feed.url}`);
             } catch (e) {}

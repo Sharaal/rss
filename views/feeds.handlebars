@@ -17,7 +17,12 @@
                 <img class="card-img-top" src="{{image}}" alt="">
                 <div class="card-body">
                   <h5 class="card-title">{{title}}</h5>
-                  <small class="card-subtitle mb-2 text-muted">{{categories}}</small>
+                  <div class="d-flex justify-content-between align-items-center">
+                    <small class="card-subtitle mb-2 text-muted">{{categories}}</small>
+                    {{#if author}}
+                      <small class="card-subtitle mb-2 text-muted">by {{author}}</small>
+                    {{/if}}
+                  </div>
                   <p class="card-text">{{description}}</p>
                   <div class="d-flex justify-content-between align-items-center">
                     <small class="text-muted">{{lookup (lookup ../feeds feed_id) 'title'}}</small>
