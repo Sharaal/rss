@@ -155,7 +155,6 @@ app.use(async (req, res, next) => {
       record.fetched_at = +record.fetched_at;
       feeds[record.id] = record;
     }
-    console.log(feeds);
     for (const feed of Object.values(feeds)) {
       if (feed.fetched_at && feed.ttl) {
         const diffMinutes = (now - feed.fetched_at) / 1000 / 60;
