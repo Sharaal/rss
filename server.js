@@ -150,11 +150,12 @@ app.use(async (req, res, next) => {
           user_feed_subscriptions.user_id = :user_id`,
       { user_id: req.user.id }
     );
-    console.log(rows);
     const feeds = {};
     for (const record of rows) {
+      record.fetched_at = +record.fetched_at;
       feeds[record.id] = record;
     }
+    console.log(feeds);
     for (const feed of Object.values(feeds)) {
       if (feed.fetched_at && feed.ttl) {
         const diffMinutes = (now - feed.fetched_at) / 1000 / 60;
