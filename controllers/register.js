@@ -4,6 +4,7 @@ module.exports = ({ betakey, knex, logger }) => async (req, res) => {
   if (betakey && betakey !== req.body.betakey) {
     req.flash('error', 'incorrect betakey');
     res.redirect('/');
+    return;
   }
 
   try {
