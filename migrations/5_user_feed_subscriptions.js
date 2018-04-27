@@ -9,7 +9,7 @@ module.exports.up = knex => knex.schema.createTable('user_feed_subscriptions', t
 
   table.unique(['user_id', 'feed_id']);
 
-  table.timestamp('pub_date').notNullable();
+  table.integer('pub_date').notNullable();
 });
 
 module.exports.down = knex => knex.schema.dropTable('user_feed_subscriptions');
