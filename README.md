@@ -16,5 +16,4 @@
 * If a user subscripe an already existing rss feed, he get all old items. He should only see the current ones
 * PK in `feed_items` only with `guid` is not good, better use combined PK with `feed_id` and `guid` and omit duplicate `guid` in the output if multiple feeds are shown
 * Get rid of `knex`, try another ORM or directly use `pg` because of incompatibility with `sqlite3`
-* Timestamp datatype in the database is bad for compatibility, better use unix timestamps
 * Search with an actual feed will fetch this feed twice, because `rss-parser` not work with the body directly
