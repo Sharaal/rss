@@ -12,14 +12,18 @@ const logger = new winston.Logger({
 
 const knex = require('knex')(require('./knexfile')[process.env.NODE_ENV]);
 
-knex.dInsert = async (table, data) => {
+knex.dInsert = async (table, data, trx) => {
+  table = knex(table);
+  if (trx) {
+    table.transacting(trx);
+  }
   logger.debug(`dInsert with table "${table}" and data "${JSON.stringify(data)}"`);
   if (knex.client.config.client === 'pg') {
-    const pgResult = await knex(table).insert(data).returning('id');
+    const pgResult = await table.insert(data).returning('id');
     logger.debug(`dInsert result "${JSON.stringify(pgResult)}"`);
     return { id: pgResult[0] };
   }
-  const result = await knex(table).insert(data);
+  const result = await table.insert(data);
   logger.debug(`dInsert result "${JSON.stringify(result)}"`);
   return { id: result[0] };
 };
