@@ -150,6 +150,7 @@ app.use(async (req, res, next) => {
           user_feed_subscriptions.user_id = :user_id`,
       { user_id: req.user.id }
     );
+    console.log(rows);
     const feeds = {};
     for (const record of rows) {
       feeds[record.id] = record;
