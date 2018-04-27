@@ -193,7 +193,11 @@ app.use(async (req, res, next) => {
                 author: item['dc:creator'],
               });
               logger.info(`new feed item "${item.title}" for feed "${feed.title} with ID ${feed.id}" and URL ${feed.url}`);
-            } catch (e) {}
+            } catch (e) {
+              if (e.code !== 'SQLITE_CONSTRAINT') {
+                logger.error(`error on inserting new feed item "${item.title}" for feed "${feed.title} with ID ${feed.id}" and URL ${feed.url}: ${e.message}`);
+              }
+            }
           }));
       } catch (e) {}
     }
