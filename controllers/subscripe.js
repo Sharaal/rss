@@ -5,7 +5,7 @@ module.exports = ({ knex }) => async (req, res) => {
   }
 
   try {
-    await knex('user_feed_subscriptions').insert({ user_id: req.user.id, feed_id: feed.id, pub_date: new Date().getTime() });
+    await knex('user_feed_subscriptions').insert({ user_id: req.user.id, feed_id: feed.id });
 
     if (req.accepts('text/html')) {
       req.flash('success', 'successfully subscriped');
