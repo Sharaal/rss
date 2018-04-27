@@ -1,11 +1,19 @@
 <div class="py-5">
   <div class="container">
     <table class="table table-striped">
+      <thead>
+        <th>Title</th>
+        <th>URL</th>
+        <th>Fetched at</th>
+        <th></th>
+      </thead>
       <tbody>
         {{#each feeds}}
           <tr>
-            <td class="w-100">{{title}}</td>
-            <td>
+            <td>{{title}}</td>
+            <td><a href="{{url}}">{{url}}</a></td>
+            <td>{{formatRelative fetched_at}}</td>
+            <td class="text-right">
               <form action="unsubscripe" method="post">
                 <input type="hidden" name="redirect" value="/settings">
                 <input type="hidden" name="feed_id" value="{{id}}">
