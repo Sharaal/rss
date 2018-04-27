@@ -19,7 +19,7 @@ module.exports.up = knex => knex.schema.createTable('feed_items', table => {
   table.string('guid').notNullable();
   table.unique('guid');
 
-  table.integer('pub_date').notNullable();
+  table.bigint('pub_date').notNullable();
 });
 
 module.exports.down = knex => knex.schema.dropTable('feed_items');

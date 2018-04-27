@@ -4,7 +4,7 @@ module.exports.up = knex => knex.schema.createTable('feeds', table => {
   table.string('url').notNullable();
   table.unique('url');
 
-  table.timestamp('fetched_at');
+  table.bigint('fetched_at');
 
   table.integer('ttl');
 

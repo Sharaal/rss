@@ -137,7 +137,7 @@ const parser = new Parser({
 
 app.use(async (req, res, next) => {
   if (req.isAuthenticated()) {
-    const now = new Date();
+    const now = new Date().getTime();
 
     const rows = await knex.dQuery(
       `SELECT
@@ -156,7 +156,7 @@ app.use(async (req, res, next) => {
     }
     for (const feed of Object.values(feeds)) {
       if (feed.fetched_at && feed.ttl) {
-        const diffMinutes = (now.getTime() - new Date(feed.fetched_at).getTime()) / 1000 / 60;
+        const diffMinutes = (now - feed.fetched_at) / 1000 / 60;
         if (diffMinutes < feed.ttl) {
           continue;
         }
