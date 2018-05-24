@@ -49,7 +49,7 @@ app.engine('handlebars', require('express-handlebars').create({
     formatRelative: date => {
       momentDate = moment(momentDate);
       if (momentDate.isValid()) {
-        return moment.duration(momentDate.diff()).humanize(true)
+        return moment.duration(momentDate.diff()).humanize(true);
       }
       return date;
     },
