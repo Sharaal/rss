@@ -21,7 +21,7 @@ module.exports = ({ knex, parser }) => async (req, res) => {
       return res.text();
     });
 
-    if (body.startsWith('<?xml')) {
+    if (body.startsWith('<?xml') && body.includes('<rss')) {
       links.push({
         url: search,
         subscriped: subscripedUrls.includes(search),
@@ -39,21 +39,34 @@ module.exports = ({ knex, parser }) => async (req, res) => {
     } else {
         const $ = cheerio.load(body);
 
-        $('link[rel="alternate"][type="application/rss+xml"]').map((_, link) => {
-          link = $(link);
-          const href = link.attr('href');
-          let url;
-          if (href.includes('://')) {
-            url = href;
-          } else {
-            url = new URL(href, search).toString();
-          }
-          links.push({
-            url,
-            title: link.attr('title'),
-            subscriped: subscripedUrls.includes(url),
+        if (body.startsWith('<?xml') && body.includes('<opml')) {
+          console.log('it is an opml');
+          $('outline[type=rss]').map((_, outline) => {
+            outline = $(outline);
+            const url = outline.attr('xmlurl');
+            links.push({
+              url,
+              title: outline.attr('text'),
+              subscriped: subscripedUrls.includes(url),
+            });
           });
-        });
+        } else {
+          $('link[rel="alternate"][type="application/rss+xml"]').map((_, link) => {
+            link = $(link);
+            const href = link.attr('href');
+            let url;
+            if (href.includes('://')) {
+              url = href;
+            } else {
+              url = new URL(href, search).toString();
+            }
+            links.push({
+              url,
+              title: link.attr('title'),
+              subscriped: subscripedUrls.includes(url),
+            });
+          });
+        }
 
         await Promise.all(links.map(async link => {
           const feed = await parser.parseURL(link.url);
