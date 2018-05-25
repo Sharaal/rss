@@ -47,7 +47,7 @@ app.engine('handlebars', require('express-handlebars').create({
   defaultLayout: 'main',
   helpers: {
     formatRelative: date => {
-      const momentDate = moment(date);
+      const momentDate = moment(parseInt(date));
       if (momentDate.isValid()) {
         return moment.duration(momentDate.diff()).humanize(true);
       }
