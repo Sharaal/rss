@@ -7,6 +7,7 @@
         <th>URL</th>
         <th>Fetched at</th>
         <th></th>
+        <th></th>
       </thead>
       <tbody>
         {{#each feeds}}
@@ -19,6 +20,12 @@
                 <input type="hidden" name="redirect" value="/settings">
                 <input type="hidden" name="feed_id" value="{{id}}">
                 <button class="btn btn-danger" type="submit">Unsubscripe</button>
+              </form>
+            </td>
+            <td class="text-right">
+              <form action="pull" method="post">
+                <input type="hidden" name="feed_id" value="{{id}}">
+                <button class="btn btn-primary" type="submit">Pull</button>
               </form>
             </td>
           </tr>

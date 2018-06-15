@@ -242,6 +242,7 @@ app.post('/subscripe', isAuthenticated, require('./controllers/subscripe')({ kne
 app.post('/unsubscripe', isAuthenticated, require('./controllers/unsubscripe')({ knex, logger }));
 app.get('/settings', isAuthenticated, require('./controllers/settings')({ knex, logger }));
 app.get('/settings/opml', isAuthenticated, require('./controllers/settings/opml')({ knex, logger }));
+app.post('/pull', isAuthenticated, require('./controllers/pull')({ knex, logger }));
 
 const port = process.env.PORT;
 app.listen(port, () => {
