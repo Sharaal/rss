@@ -41,6 +41,7 @@ const app = express();
 app.disable('x-powered-by');
 
 app.use(express.static('www'));
+app.use(express.static(require('path').join(__dirname, './node_modules/material-dashboard/assets')));
 
 const moment = require('moment');
 app.engine('handlebars', require('express-handlebars').create({
